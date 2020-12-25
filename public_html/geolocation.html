@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GEO TEST</title>
+</head>
+<body onload="checkBrowser()">
+
+<div class="info">
+    <span id="support">HTML5 지오로케이션을 지원하지 않는 브라우저 입니다.</span>
+</div>
+
+<div id="map_canvas" style="width:100%; height:600px"></div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBTUMMBSCxuJroT02I4E1DuOAAORwoQxS0&sensor=TRUE"></script>
+<script type="text/javascript">
+	var apiGeolocationSuccess = function(position) {
+    alert("API geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
+};
+
+var tryAPIGeolocation = function() {
+    jQuery.post( "http://maps.googleapis.com/maps/api/js?key=AIzaSyBTUMMBSCxuJroT02I4E1DuOAAORwoQxS0&sensor=TRUE", function(success) {
+        apiGeolocationSuccess({coords: {latitude: success.location.lat, longitude: success.location.lng}});
+  })
+  .fail(function(err) {
+    alert("API Geolocation error! \n\n"+err);
+  });
+};
+
+var browserGeolocationSuccess = function(position) {
+    alert("Browser geolocation success!\n\nlat = " + position.coords.latitude + "\nlng = " + position.coords.longitude);
+};
+
+var browserGeolocationFail = function(error) {
+  switch (error.code) {
+    case error.TIMEOUT:
+      alert("Browser geolocation error !\n\nTimeout.");
+      break;
+    case error.PERMISSION_DENIED:
+      if(error.message.indexOf("Only secure origins are allowed") == 0) {
+        tryAPIGeolocation();
+      }
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Browser geolocation error !\n\nPosition unavailable.");
+      break;
+  }
+};
+
+var tryGeolocation = function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        browserGeolocationSuccess,
+      browserGeolocationFail,
+      {maximumAge: 50000, timeout: 20000, enableHighAccuracy: true});
+  }
+};
+
+tryGeolocation();
+
+    var mapOptions = {
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+    function checkBrowser() {
+        if( navigator.geolocation ) {
+            document.getElementById("support").innerHTML="HTML5 지오로케이션을 지원하는 브라우저 입니다.";
+            navigator.geolocation.getCurrentPosition(updateLocation, handlerLocationError, {enableHighAccuracy: true, maximumAge: 0});
+        }
+    }
+
+    function updateLocation(position) {
+
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
+
+        map.setCenter(new google.maps.LatLng(latitude, longitude));
+    }
+
+    function handlerLocationError(error) {
+        alert( );
+    }
+</script>
+<script type="text/javascript" src="javascript/jquery.js"> </script>
+</body>
+</html>
+

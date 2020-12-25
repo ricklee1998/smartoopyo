@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <title>스마투표 - SmatVote</title>
+    <!--css-->
+    <link href="css/Materialize.css" rel="stylesheet">
+    <link href="css/plusCSS.css" rel="stylesheet">
+    <link href="css/font.css" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+    <link href="css/color.css" rel="stylesheet">
+    <link href="css/button.css" rel="stylesheet">
+    <!--favicon-->
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="checkBrowser()">
+<!--logo-->
+<div class="darkGrey">
+    <img class="mainLogoSize" src="image/whitelogo.png" alt="SmatVote">
+</div>
+
+<!-- geoloction -->
+<br>
+<div class="container">
+    <div class="card white">
+
+        <h5 style="font-weight: bold; text-align: center; margin-top: 0.2em">알고 싶은 지역을 클릭하거나 검색하세요</h5>
+        <div class="info">
+            <span id="support"></span>
+        </div>
+        <div id="floating-panel">
+	   <center>
+            <input id="address" size="50" type="textbox" placeholder="찾고자 하는 주소를 입력하세요">
+            <button type="submit" id="submit">검색하기</button>
+	</center>
+        </div>
+        <div id="map_canvas" style="width:100%; height:600px"></div>
+        <div id="geolocation"></div>
+    </div>
+</div>
+
+<!-- 이름 & 당명 -->
+<div>
+	<div id="demo4"></div>
+</div>
+
+<!-- 후보자 탭 -->
+<div class="darkGrey" style="height: 2px;"></div>
+<div class="card-content">
+</div>
+<div class="row">
+    <ul class="tabs white">
+        <li id="3" class="col l3 s4 tab fastmove darkGrey clicked" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1 active whiteText">광역자치장</a></li>
+        <li id="5" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-">광역자치의원</a></li>
+        <li id="4" class="col l3 s4 tab fastmove" onclick="clickTab(this)"
+        ><a class="grey-text text-lighten-1">기초자치장</a></li>
+        <li id="6" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1">기초자치의원</a></li>
+        <li id="11" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1">교육감</a></li>
+    </ul>
+</div>
+<!-- 후보자 목록 -->
+<section class="container">
+    <div class="card-content white" style="width: 80%; margin: 0 10%">
+
+        <br>
+        <div class="row" id="demo">
+        </div>
+
+    </div>
+</section>
+<!--후보자 정보-->
+<div class="container">
+    
+	<div id="demo3"></div>
+
+</div>
+<!--트렌드-->
+<div>
+	<button onclick="trend()"></button>
+    <div id="demo2"></div>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+</div>
+<!--검색안되면 그냥 뉴스목록-->
+<nav>
+    <div class="nav-wrapper whiteSmoke">
+        <div class="container">
+            <form>
+                <div class="input-field">
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<!-- news
+<div class="nav-wrapper container darkGrey white-text" style="border-radius: 10px;">
+	<h3 id="practice1" class="textCenter textPadding1">관련 뉴스 목록1</h3>
+	<h3 id="practice2" class="textCenter textPadding1">관련 뉴스 목록2</h3>
+    <h3 class="textCenter textPadding1">관련 뉴스 목록</h3>
+</div>-->
+
+
+<!--뉴스목록-->
+<div class="news">
+    <div class="container">
+        <div class="navernews" id="nnews">
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer darkGrey">
+    <div class="container row">
+        <section class="col l6 s12">
+            <h2 class="white-text"><img src="image/whiteelogo.png" alt="스마투표" style="width: 40%; height: auto">
+            </h2>
+            <p class="grey-text text-lighten-3">알고하는 투표, 변해가는 세상</p>
+        </section>
+        <section class="col l4 offset-l2 s12">
+            <h5 class="grey-text text-lighten-3">조원이름</h5>
+            <ul>
+                <li><a class="grey-text text-lighten-1">장동주</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">강민용</a>
+                <li>
+                <li><a class="grey-text text-lighten-1">김병철</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">김신현</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">이선위</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">임승원</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">조성래</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <br>
+</footer>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="javascript/trend.js"></script>
+<script src="javascript/jquery.js"></script>
+<script src="javascript/Materialize.js"></script>
+<script src="javascript/tab.js"></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzsp2bCcs3icPg80ttbdzFztqUzpuVDwI&sensor=TRUE"></script>
+<script src="javascript/geolocation.js"></script>
+</body>
+</html>

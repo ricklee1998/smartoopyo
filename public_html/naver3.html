@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="address" size="50" type="textbox" placeholder="찾고자 하는 주소를 입력하세요">
+<button type="submit" id="submit">검색하기</button>
+
+<div id="map" style="width:100%;height:400px;"></div>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=vodhYhhZWHJIsfZH36Ee&submodules=geocoder"></script>
+<script type="text/javascript">
+    var map = new naver.maps.Map("map", {
+        center: new naver.maps.LatLng(37.3595316, 127.1052133),
+        zoom: 10,
+        mapTypeControl: true
+    });
+
+    var infoWindow = new naver.maps.InfoWindow({
+        anchorSkew: true
+    });
+
+    map.setCursor('pointer');
+ naver.maps.Event.addListener(map, 'click', function(e) {
+        var marker = new naver.maps.Marker({
+            position: e.coord,
+            map: map
+        });
+
+        markerList.push(marker);
+    });
+
+    naver.maps.Event.addListener(map, 'keydown', function(e) {
+        var keyboardEvent = e.keyboardEvent,
+            keyCode = keyboardEvent.keyCode || keyboardEvent.which;
+
+        var ESC = 27;
+
+        if (keyCode === ESC) {
+            keyboardEvent.preventDefault();
+
+            for (var i=0, ii=markerList.length; i<ii; i++) {
+                markerList[i].setMap(null);
+            }
+
+            markerList = [];
+
+            menuLayer.hide();
+        }
+    });
+
+    naver.maps.Event.addListener(map, 'mousedown', function(e) {
+        menuLayer.hide();
+    });
+
+    naver.maps.Event.addListener(map, 'rightclick', function(e) {
+        var coordHtml = 'Coord: '+ e.coord +'<br />Point: '+ e.point +'<br />Offset: '+ e.offset;
+
+        menuLayer.show().css({
+            left: e.offset.x,
+            top: e.offset.y
+        }).html(coordHtml);
+    });
+
+    // search by tm128 coordinate
+    function searchCoordinateToAddress(latlng) {
+        var tm128 = naver.maps.TransCoord.fromLatLngToTM128(latlng);
+
+        infoWindow.close();
+
+        naver.maps.Service.reverseGeocode({
+            location: tm128,
+            coordType: naver.maps.Service.CoordType.TM128
+        }, function(status, response) {
+            if (status === naver.maps.Service.Status.ERROR) {
+                return alert('Something Wrong!');
+            }
+
+            var items = response.result.items,
+                htmlAddresses = [];
+
+            for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
+                item = items[i];
+                addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]';
+
+                htmlAddresses.push((i+1) +'. '+ addrType +' '+ item.address);
+            }
+
+            infoWindow.setContent([
+                '<div style="padding:10px;min-width:200px;line-height:150%;">',
+                '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+                htmlAddresses.join('<br />'),
+                '</div>'
+            ].join('\n'));
+
+            infoWindow.open(map, latlng);
+        });
+    }
+
+    // result by latlng coordinate
+    function searchAddressToCoordinate(address) {
+        naver.maps.Service.geocode({
+            address: address
+        }, function(status, response) {
+            if (status === naver.maps.Service.Status.ERROR) {
+                return alert('Something Wrong!');
+            }
+
+            var item = response.result.items[0],
+                addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
+                point = new naver.maps.Point(item.point.x, item.point.y);
+
+            infoWindow.setContent([
+                '<div style="padding:10px;min-width:200px;line-height:150%;">',
+                '<h4 style="margin-top:5px;">검색 주소 : '+ response.result.userquery +'</h4><br />',
+                addrType +' '+ item.address +'<br />',
+                '</div>'
+            ].join('\n'));
+
+
+            map.setCenter(point);
+            infoWindow.open(map, point);
+        });
+    }
+
+    function initGeocoder() {
+        map.addListener('click', function(e) {
+            searchCoordinateToAddress(e.coord);
+        });
+
+        $('#address').on('keydown', function(e) {
+            var keyCode = e.which;
+
+            if (keyCode === 13) { // Enter Key
+                searchAddressToCoordinate($('#address').val());
+            }
+        });
+
+        $('#submit').on('click', function(e) {
+            e.preventDefault();
+
+            searchAddressToCoordinate($('#address').val());
+        });
+
+        searchAddressToCoordinate('정자동 178-1');
+    }
+
+    naver.maps.onJSContentLoaded = initGeocoder;
+	
+
+    </script>
+</body>
+</html>

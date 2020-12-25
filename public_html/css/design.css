@@ -1,0 +1,79 @@
+.fontBold{
+	font-weight: bold;
+}
+.textCenter{
+    text-align: center;
+}
+.mainLogoSize{
+	width: 18%; height: auto; margin: 2% 41%;
+}
+@media screen and (min-width: 994px) {
+    .mainLogoSize {
+        width: 10%;
+        height: auto;
+        margin: 1% 45%;
+    }
+}
+.subLogoSize{
+    width: 40%; height: auto
+}
+.tabs .tab{
+    cursor: pointer;
+}
+.row .card.col{
+    cursor: pointer;
+}
+.card-content.col{
+    font-size: 1.3em;
+}
+.geoSize{
+    height: 400px;margin: 0 25%;
+}
+.textPadding1{
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+.textPadding2{
+    padding-top: 0.2em;
+    padding-left: 0.2em;
+}
+.tab:hover{
+    background-color: #E5E5E5;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+}
+.darkGrey:hover{
+    background-color: #424242;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+}
+.card-title.activator{
+    color: #f4c166
+}
+.card-title.activator .right:hover{
+    color: #fff1c5;
+    -webkit-transition: color 300ms linear;
+    -ms-transition: color 300ms linear;
+    transition: color 300ms linear;
+}
+.card-content p{
+    font-size: 0.8em;
+}
+.card-content h3{
+}
+.collapsible{
+    max-height: 0;
+    overflow: hidden;
+    margin: 0; !important;
+    border: none;
+    outline: none;
+}
+.btn:hover{
+    background: #555555;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
+}

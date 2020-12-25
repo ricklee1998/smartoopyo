@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <title>스마투표 - SmatVote</title>
+    <!--css-->
+    <link href="css/Materialize.css" rel="stylesheet">
+    <link href="css/plusCSS.css" rel="stylesheet">
+    <link href="css/font.css" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+    <link href="css/color.css" rel="stylesheet">
+    <!--favicon-->
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+<!--logo-->
+<div class="darkGrey">
+    <img class="mainLogoSize" src="image/whitelogo.png" alt="SmatVote">
+</div>
+
+<!-- geoloction -->
+<br>
+<div class="container">
+    <div class="card white">
+        <h5 style="font-weight: bold; text-align: center;">알고싶은 선거구 위치</h5>
+        <div class="info">
+            <span id="support">HTML5 지오로케이션을 지원하지 않는 브라우저 입니다.</span>
+        </div>
+        <div id="map_canvas geoSize"></div>
+    </div>
+</div>
+
+<!-- 후보자 탭 -->
+<div class="darkGrey" style="height: 2px;"></div>
+<div class="card-content">
+</div>
+<div class="row">
+    <ul class="tabs white">
+        <li id="3" class="col l3 s4 tab fastmove darkGrey clicked" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1 active whiteText">광역자치장</a></li>
+        <li id="5" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-">광역자치의원</a></li>
+        <li id="4" class="col l3 s4 tab fastmove" onclick="clickTab(this)"
+        ><a class="grey-text text-lighten-1">기초자치장</a></li>
+        <li id="6" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1">기초자치의원</a></li>
+        <li id="11" class="col l2 s4 tab fastmove" onclick="clickTab(this)">
+            <a class="grey-text text-lighten-1">교육감</a></li>
+    </ul>
+</div>
+<!-- 후보자 목록 -->
+<div class="card-content white">
+    <section class="container">
+        <br>
+        <div class="row">
+            <br>
+            <div class="card col s4 l3 whiteGrey clicked" onclick="GetNews()">
+                <h5 class="fontBold">이숙연</h5>
+                <div class="card-action">
+                    <a>관력작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3 tab" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+            <div class="card col s4 l3 tab" onclick="clickCandi(this)">
+                <h5 class="fontBold">강민용</h5>
+                <div class="card-action">
+                    <a>관련작업</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<!-- news -->
+<div class="nav-wrapper container" style="background: #424242; color:white; border-radius: 10px;">
+    <h3 style="text-align: center">관련 뉴스 목록</h3>
+</div>
+<nav>
+
+    <div class="nav-wrapper" style="background: whitesmoke">
+        <div class="container">
+            <form>
+                <div class="input-field">
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons" style="color: black;">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="news">
+    <div class="container">
+	<div style="padding:2%;">
+		<div class="uk-article under_bar">
+			<h3 class="uk_article-lead">주요뉴스</h3>
+		</div>
+	</div>
+        
+            <div id="demo"></div>
+			<script type = "text/javascript">
+				function GetNews(){
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function(){
+						if (this.readyState == 4 && this.status == 200)
+						{
+							document.getElementById("demo").innerHTML = this.responseText;
+						}
+					};
+					xhttp.open("POST", "naver_info.php",true);
+					xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					
+					
+					//var sgn = "종로구";
+					//var sgT = "4";
+					var text1 = "이숙연"
+					var text2 = ""
+					xhttp.send("text_Text="+text1);
+
+				}
+			</script>
+
+    </div>
+</div>
+
+<!-- footer -->
+<footer class="page-footer" style="background: #424242">
+    <div class="container row">
+        <section class="col l6 s12">
+            <h2 style="color: white"><img src="image/whiteelogo.png" alt="스마투표" style="width: 40%; height: auto">
+            </h2>
+            <p class="grey-text text-lighten-3">알고하는 투표 변해가는 세상</p>
+        </section>
+        <section class="col l4 offset-l2 s12">
+            <h5 class="grey-text text-lighten-3">조원이름</h5>
+            <ul>
+                <li><a class="grey-text text-lighten-1">장동주</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">강민용</a>
+                <li>
+                <li><a class="grey-text text-lighten-1">김병철</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">김신현</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">이선위</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">임승원</a>
+                </li>
+                <li><a class="grey-text text-lighten-1">조성래</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <br>
+</footer>
+<script src="javascript/jquery.js"></script>
+<script src="javascript/Materialize.js"></script>
+<!--<script src="javascript/geolocation.js"></script>-->
+</body>
+</html>

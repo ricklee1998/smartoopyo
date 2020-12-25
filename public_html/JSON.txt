@@ -1,0 +1,42 @@
+<네이버 트렌드 API JSON>
+
+
+[{"groupName":"박원순","keywords":["박원순"]},
+{"groupName":"김문수","keywords":["김문수"]},
+{"groupName":"안철수","keywords":["안철수"]},
+{"groupName":"김종민","keywords":["김종민"]},
+{"groupName":"김진수","keywords":["김진수"]},
+{"groupName":"인지연","keywords":["인지연"]},
+{"groupName":"신지예","keywords":["신지예"]},
+{"groupName":"우인철","keywords":["우인철"]},
+{"groupName":"최태현","keywords":["최태현"]}]
+
+
+{"startDate":"2018-05-27", "endDate":"2018-06-03", "timeUnit":"date", "keywordGroups":[{"groupName":"박원순","keywords":["박원순"]},
+{"groupName":"김문수","keywords":["김문수"]},{
+"groupName":"안철수","keywords":["안철수"]},
+{"groupName":"김종민","keywords":["김종민"]},
+{"groupName":"김진수","keywords":["김진수"]},
+{"groupName":"인지연","keywords":["인지연"]},
+{"groupName":"신지예","keywords":["신지예"]},
+{"groupName":"우인철","keywords":["우인철"]},
+{"groupName":"최태현","keywords":["최태현"]}]}
+
+솔직히 윗 부분은 하나도 도움이 안 됩니다.
+
+status_code:200 
+해당 문구는 평문이기 때문에, {~~~~}로 구성되어야 하는 JSON 형식상 실제 output은 JSON으로 인식되지 않습니다.
+따라서,  obj_json = JSON.parse(obj.slice(obj.indexOf("status") + 16)); 코드를 사용해서 해당 부분을 기준으로 잘라내고, 앞 부분을 JSON으로 파싱했습니다.
+
+{"startDate":"2018-05-27","endDate":"2018-06-03","timeUnit":"date",
+사실 여기도 안 씁니다.
+"results":[
+{"title":"박원순","keywords":["박원순"],
+"data":[{"period":"2018-05-27","ratio":4.64177},{"period":"2018-05-28","ratio":7.85189},
+{"period":"2018-05-29","ratio":5.70408},{"period":"2018-05-30","ratio":44.52009},
+{"period":"2018-05-31","ratio":43.34316},{"period":"2018-06-01","ratio":9.93863}]},
+result는 title/keywords/data로 구성되어 있고, 실제로 필요한 값은 title/data 밖에 없습니다.
+이부분 확인하신 상태에서 코드 보시면 될거에요!
+
+
+{"title":"김문수","keywords":["김문수"],"data":[{"period":"2018-05-27","ratio":3.79597},{"period":"2018-05-28","ratio":6.05253},{"period":"2018-05-29","ratio":13.50928},{"period":"2018-05-30","ratio":100},{"period":"2018-05-31","ratio":44.86984},{"period":"2018-06-01","ratio":12.08285}]},{"title":"안철수","keywords":["안철수"],"data":[{"period":"2018-05-27","ratio":7.4992},{"period":"2018-05-28","ratio":13.88483},{"period":"2018-05-29","ratio":9.15129},{"period":"2018-05-30","ratio":52.43273},{"period":"2018-05-31","ratio":79.53654},{"period":"2018-06-01","ratio":13.49197}]},{"title":"김종민","keywords":["김종민"],"data":[{"period":"2018-05-27","ratio":3.15787},{"period":"2018-05-28","ratio":2.70851},{"period":"2018-05-29","ratio":1.88492},{"period":"2018-05-30","ratio":75.42836},{"period":"2018-05-31","ratio":74.86537},{"period":"2018-06-01","ratio":3.55954}]},{"title":"김진수","keywords":["김진수"],"data":[{"period":"2018-05-27","ratio":0.43759},{"period":"2018-05-28","ratio":1.35164},{"period":"2018-05-29","ratio":0.75142},{"period":"2018-05-30","ratio":0.58454},{"period":"2018-05-31","ratio":0.96303},{"period":"2018-06-01","ratio":7.61121}]},{"title":"인지연","keywords":["인지연"],"data":[{"period":"2018-05-27","ratio":1.51558},{"period":"2018-05-28","ratio":2.24839},{"period":"2018-05-29","ratio":1.37907},{"period":"2018-05-30","ratio":3.72347},{"period":"2018-05-31","ratio":6.93262},{"period":"2018-06-01","ratio":2.52335}]},{"title":"신지예","keywords":["신지예"],"data":[{"period":"2018-05-27","ratio":3.03051},{"period":"2018-05-28","ratio":6.25042},{"period":"2018-05-29","ratio":3.22677},{"period":"2018-05-30","ratio":8.37995},{"period":"2018-05-31","ratio":24.22808},{"period":"2018-06-01","ratio":8.68071}]},{"title":"우인철","keywords":["우인철"],"data":[{"period":"2018-05-27","ratio":1.43426},{"period":"2018-05-28","ratio":2.50213},{"period":"2018-05-29","ratio":1.35589},{"period":"2018-05-30","ratio":3.69114},{"period":"2018-05-31","ratio":7.80977},{"period":"2018-06-01","ratio":2.60924}]},{"title":"최태현","keywords":["최태현"],"data":[{"period":"2018-05-27","ratio":1.24192},{"period":"2018-05-28","ratio":2.06551},{"period":"2018-05-29","ratio":1.19163},{"period":"2018-05-30","ratio":3.12456},{"period":"2018-05-31","ratio":5.80662},{"period":"2018-06-01","ratio":1.8908}]}]}

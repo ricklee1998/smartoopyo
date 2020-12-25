@@ -1,0 +1,27 @@
+.page-footer.darkGrey{
+	background: #424242;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	transition: background-color 300ms linear;
+}
+.darkGrey{
+	background: #424242;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	transition: background-color 300ms linear;
+}
+.whiteGrey{
+	background: #E5E5E5;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	transition: background-color 300ms linear;
+}
+.whiteSmoke{
+	background: whitesmoke;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	transition: background-color 300ms linear;
+}
+.tabs .col a.whiteText{
+	color: white;
+}
